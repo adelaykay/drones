@@ -67,9 +67,9 @@ The service should allow:
 
 :scroll: *END*
 
-// Solution
+## Solution
 
-Assumptions made
+### Assumptions made
 Drones can be loaded with more than one medication
 Drone Weight Limits(max weight a drone can carry):
 Lightweight - 200gr
@@ -93,10 +93,10 @@ A periodic task can be implemented to check the battery levels of the drones and
 In terms of data format, the input and output should be in JSON format as per the requirement. The project should be buildable and runnable, with clear instructions on how to do so in the README file. The required data should be preloaded into the database and JUnit test cases are optional but advisable.
 
 
-// DATABASE DESIGN
+### DATABASE DESIGN
 DBMS - MONGODB (COMPASS)
 
-COLLECTIONS
+### COLLECTIONS
 Drones: This collection/table has fields for the drone's serial number, model, weight limit, battery capacity, and state. The serial number and model fields are of type string, while the weight limit and battery capacity fields are of type integer. The state field is of type enumeration and can include the values IDLE, LOADING, LOADED, DELIVERING, DELIVERED, and RETURNING.
 
 Medications: This collection/table has fields for the medication's name, weight, code, and image. The name and code fields are of type string and can include only letters, numbers, ‘-‘, and ‘_’. The weight is of type integer, and the image is of binary data.
@@ -107,7 +107,7 @@ Battery_Logs: This collection/table has fields for drone id, battery percentage,
 
 Additional fields, created_at and updated_at, were included to track when the records were created and last updated.
 
-// COLLECTION SCHEMA MONGODB
+### COLLECTION SCHEMA MONGODB
 Drones
 {
     "_id": ObjectId,
@@ -147,7 +147,7 @@ Battery Logs
     "updated_at": Date
 }
 
-// Routes
+### Routes
 Register a drone: /api/drones with method POST: This endpoint accepts a JSON payload with the drone's serial number, model, weight limit, and battery capacity. The API then validates the payload and inserts a new document into the drones collection with the provided data making sure to include required default values for document id (_id), created_at, and updated_at times.
 
 Load a drone with medication: /api/drones/:id/load with method POST: This endpoint accepts a JSON payload with the medication's code, and a query parameter for the id of the drone to be loaded. The API then validates the payload and the drone state, checks if the weight of medication is less than the weight limit of the drone, and also checks if the battery level is above 25%. If all validations pass, the API adds the medication to the drone by inserting a new document into the drone_medication collection with the provided data.
@@ -159,7 +159,7 @@ Check available drones for loading: /api/drones?state=IDLE with method GET: This
 Check drone battery level for a given drone: /api/drones/:id/battery with method GET: This endpoint accepts a query parameter for the id of the drone and returns the current battery level of that drone.
 
 
-// Battery level checks
+### Battery level checks
 To implement the battery level checks, you can use the following approach:
 
 Periodic task: You can set up a periodic task using a library like Celery or a cron job, which runs at a specified interval to check the battery levels of the drones and create an audit log of the results. This task can query the drones collection for all drones, read the battery percentage and update the battery_logs collection with the current battery percentage and timestamp.
@@ -168,4 +168,3 @@ Event-driven: You can also implement the battery level checks in an event-driven
 
 Real-time monitoring: You can also implement a real-time monitoring of the battery percentage, where the API continuously checks the battery percentage of the drones and update the battery_logs collection with the current battery percentage and timestamp.
 
-For example, If you choose to implement the battery level checks using a periodic task, you can use Celery library to schedule a task that
