@@ -41,13 +41,9 @@ The service should allow:
 - checking available drones for loading;
 - check drone battery level for a given drone;
 
-> Feel free to make assumptions for the design approach. 
-
 ---
 
 ### Requirements
-
-While implementing your solution *please take care of the following requirements*: 
 
 #### Functional requirements
 
